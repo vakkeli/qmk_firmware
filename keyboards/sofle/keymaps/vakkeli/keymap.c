@@ -103,13 +103,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
   [_QWERTY] = LAYOUT(
   					//,------------------------------------------------.                    ,---------------------------------------------------.
-    KC_0,  KC_GESC,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,             						KC_6, KC_7,   KC_8,    KC_9,    KC_0,    KC_MINS,    KC_BSPC,
+    KC_0,  QK_GRAVE_ESCAPE,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,             						KC_6, KC_7,   KC_8,    KC_9,    KC_0,    KC_MINS,    KC_BSPC,
   					//|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
   				KC_TAB,   KC_Q,   KC_W,      KC_E,   KC_R,     KC_T,                      KC_Y,    KC_U,   KC_I,    KC_O,    KC_P,    KC_BSLS,
   					//|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
     KC_0,  MEH_T(KC_CAPS),  KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                      KC_H,    KC_J,   KC_K,    KC_L,    KC_SCLN, KC_QUOT,    RSFT_T(KC_ENT),
   					//|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
-  					LSFT_T(KC_NUBS), KC_Z,   KC_X,    KC_C,    KC_V,    KC_B,  KC_MUTE,  KC_D_MUTE,KC_N,    KC_M,   KC_COMM, KC_DOT,  KC_SLSH, KC_UP,
+  					LSFT_T(KC_NUBS), KC_Z,   KC_X,    KC_C,    KC_V,    KC_B,  KC_MUTE,  KC_MS_BTN3,KC_N,    KC_M,   KC_COMM, KC_DOT,  KC_SLSH, KC_UP,
   					//|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
 	 KC_0,    KC_LCTRL, KC_LGUI, KC_LALT, LT(_ADJUST,KC_LSFT), KC_LOWER,KC_SPC ,  KC_HOME   ,   KC_END  , KC_SPC ,  KC_RALT, KC_DEL, KC_RBRC,    KC_LEFT,    KC_DOWN,    KC_RIGHT
   //            \--------+--------+--------+---------+-------|   |--------+---------+--------+---------+-------/
@@ -224,11 +224,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
   KC_GRV,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                      KC_6,    KC_7,    KC_8,    KC_9,    KC_0,   KC_LBRC,
   //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
-  _______, _______,  KC_LBRC,  KC_NO,   KC_NO,   KC_WH_U, KC_PGUP,                   KC_LEFT, KC_DOWN, KC_UP,  KC_RGHT, KC_NO,   KC_DEL,   KC_DEL,
+  _______, CAPS_WORD,  KC_LBRC,  KC_NO,   KC_NO,   KC_WH_U, KC_PGUP,                   KC_LEFT, KC_DOWN, KC_UP,  KC_RGHT, KC_NO,   KC_DEL,   KC_MEDIA_PLAY_PAUSE,
   //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
-  _______,  KC_NO,  KC_NO,   KC_NO,   KC_WH_D, KC_PGDN,_______,    _______,KC_NO,  KC_NO,  KC_NO,   KC_NO,   KC_NO,    _______,
+  _______,  KC_NO,  KC_NO,   KC_NO,   KC_WH_D, KC_PGDN,_______,    _______,KC_NO,  KC_NO,  KC_NO,   KC_NO,   KC_NO,    KC_VOLU,
   //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
-_______, _______, _______, _______, _______, _______, _______, _______,        _______, _______, _______, _______, _______,    KC_LEFT,    KC_DOWN,    KC_RIGHT
+_______, _______, _______, _______, _______, _______, _______, _______,        _______, _______, _______, _______, KC_GRV,    KC_MEDIA_PREV_TRACK,    KC_VOLD,    KC_MEDIA_NEXT_TRACK
   //            \--------+--------+--------+---------+-------|   |--------+---------+--------+---------+-------/
 ),
 
@@ -529,6 +529,7 @@ static void render_wake_logo(void) {
 //     oled_write_raw_P(wake_logo, sizeof(wake_logo));
 // }
 
+
 void render_wpm(void) {
 		oled_set_cursor(0,13);
     oled_write_P(PSTR("     "), false);
@@ -613,6 +614,12 @@ static void print_status_narrow(void) {
     oled_write_P(PSTR("\n"), false);
 		led_t led_state = host_keyboard_led_state();
 		oled_write_P(led_state.caps_lock ? PSTR("CAPS!") : PSTR("\n"), false);
+		if (is_caps_word_on()) {
+			oled_write_P(PSTR("AUTO\nCAPS!"), false);
+		}
+		else{
+			oled_write_P(PSTR("\n\n"), false);
+		}
 }
 
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {

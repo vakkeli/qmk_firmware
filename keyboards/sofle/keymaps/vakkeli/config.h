@@ -37,6 +37,7 @@
     #define TAPPING_TERM 200
 #endif
 
+#define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
 
 #define SPLIT_OLED_ENABLE
 

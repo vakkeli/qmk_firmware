@@ -26,7 +26,7 @@
 #define DEBOUNCE 5
 
 /* encoder support */
-#define ENCODER_RESOLUTIONS { 4, 1 }
+#define ENCODER_RESOLUTION 4
 #define ENCODER_RESOLUTION_RIGHT 1
 #define ENCODERS_PAD_A { F5 }
 #define ENCODERS_PAD_B { F4 }
@@ -42,8 +42,6 @@
 #define SERIAL_USE_MULTI_TRANSACTION
 #define SOFT_SERIAL_PIN D2
 
-#define NO_ACTION_MACRO
-#define NO_ACTION_FUNCTION
 //
 // #define SPLIT_WPM_ENABLE
 // #define SPLIT_OLED_ENABLE
